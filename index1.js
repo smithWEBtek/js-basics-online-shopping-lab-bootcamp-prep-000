@@ -41,6 +41,7 @@ function viewCart() {
 	} else if (cart.length === 2) {
 		return string + `${cart[0].itemName} at $${cart[0].itemPrice}, and ${cart[1].itemName} at $${cart[1].itemPrice}.`;
 	} else {
+
 		for (var i = 0; i < cart.length; i++) {
 			cartItems.push(`${cart[i].itemName} at $${cart[i].itemPrice}`);
 		}
@@ -63,7 +64,8 @@ function total() {
 		console.log('i', i);
 		prices.push(cart[i]['itemPrice'])
 	}
-	return prices.reduce((acc, cv) => acc + cv);
+	// return prices.reduce((acc, cv) => acc + cv);
+	return prices.reduce(reducer);
 }
 
 // function removeFromCart(item) {
