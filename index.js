@@ -11,8 +11,15 @@ function setCart(c) {
 
 function addToCart(item) {
 	var item = generateCartItem(item)
-	getCart().push(item)
+	cart.push(item)
 	return `${item.itemName} has been added to your cart.`
+}
+
+function generateCartItem(itemName) {
+	return {
+		itemName: itemName,
+		itemPrice: getRandomInt(1, 100)
+	}
 }
 
 function total() {
@@ -40,28 +47,21 @@ function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function generateCartItem(itemName) {
-	return {
-		itemName: itemName,
-		itemPrice: getRandomInt(1, 100)
-	}
-}
-
 function viewCart() {
 	var cartDescription = 'In your cart, you have '
 
-	if (getCart().length === 0) {
+	if (cart.length === 0) {
 		return "Your shopping cart is empty."
 	} else {
-		if (getCart().length >= 1) {
-			cartDescription += `${getCart()[0].itemName} at $${getCart()[0].itemPrice}`
+		if (cart.length >= 1) {
+			cartDescription += `${cart[0].itemName} at $${cart[0].itemPrice}`
 		}
-		if (getCart().length >= 2) {
+		if (cart.length >= 2) {
 			var middleCartItemsDescription = ''
-			for (var i = 1; i < getCart().length - 1; i++) {
-				middleCartItemsDescription += `, ${getCart()[i].itemName} at $${getCart()[i].itemPrice}`
+			for (var i = 1; i < cart.length - 1; i++) {
+				middleCartItemsDescription += `, ${cart[i].itemName} at $${cart[i].itemPrice}`
 			}
-			cartDescription += `${middleCartItemsDescription}, and ${getCart()[getCart().length - 1].itemName} at $${getCart()[getCart().length - 1].itemPrice}`
+			cartDescription += `${middleCartItemsDescription}, and ${cart[cart.length - 1].itemName} at $${cart[cart.length - 1].itemPrice}`
 		}
 	}
 	return `${cartDescription}.`
@@ -69,16 +69,16 @@ function viewCart() {
 
 function searchCartForItemToRemove(itemName) {
 	var searchResult
-	for (var i = 0; i < getCart().length; i++) {
-		if (getCart()[i].itemName === itemName) { searchResult = getCart()[i] }
+	for (var i = 0; i < cart.length; i++) {
+		if (cart[i].itemName === itemName) { searchResult = cart[i] }
 	}
 	return searchResult
 }
 
 function sumUpPrices() {
 	var sum = 0
-	for (var i = 0; i < getCart().length; i++) {
-		sum = sum + getCart()[i].itemPrice
+	for (var i = 0; i < cart.length; i++) {
+		sum = sum + cart[i].itemPrice
 	}
 	return sum
 }
@@ -89,7 +89,5 @@ function notifyUserThereIsNoItemToRemove() {
 
 function removeItemFromCart(itemToRemove) {
 	var indexOfItemToRemove = cart.indexOf(itemToRemove)
-	//Array.prototype.splice()
-	//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
-	getCart().splice(indexOfItemToRemove, 1)
+	cart.splice(indexOfItemToRemove, 1)
 }
