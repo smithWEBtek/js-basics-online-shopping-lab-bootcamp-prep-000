@@ -10,27 +10,55 @@ function setCart(c) {
 }
 
 function addToCart(item) {
-	var item = generateCartItem(item)
-	cart.push(item)
-	return `${item.itemName} has been added to your cart.`
-}
-
-function generateCartItem(itemName) {
-	return {
-		itemName: itemName,
-		itemPrice: getRandomInt(1, 100)
+	var newItem = {
+		itemName: item,
+		itemPrice: Math.floor(Math.random() * 100)
 	}
+	cart.push(newItem)
+	return `${item} has been added to your cart.`
 }
 
 function total() {
 	var sum = sumUpPrices()
 	return sum
 }
+//////////////////////// Long Way  /////////////////////////////////////
+// function removeFromCart(itemName) {
+// 	var itemToRemove = searchCartForItemToRemove(itemName)
+// 	return itemToRemove ? removeItemFromCart(itemToRemove) : notifyUserThereIsNoItemToRemove()
+// }
 
-function removeFromCart(itemName) {
-	var itemToRemove = searchCartForItemToRemove(itemName)
-	return itemToRemove ? removeItemFromCart(itemToRemove) : notifyUserThereIsNoItemToRemove()
+// function searchCartForItemToRemove(itemName) {
+// 	var searchResult
+// 	for (var i = 0; i < cart.length; i++) {
+// 		if (cart[i].itemName === itemName) { searchResult = cart[i] }
+// 	}
+// 	return searchResult
+// }
+
+// function notifyUserThereIsNoItemToRemove() {
+// 	return 'That item is not in your cart.'
+// }
+
+// function removeItemFromCart(itemToRemove) {
+// 	var indexOfItemToRemove = cart.indexOf(itemToRemove)
+// 	cart.splice(indexOfItemToRemove, 1)
+// }
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////// Short Way ////////////////////////////////////
+function removeFromCart(item) {
+	var itemToRemove
+	for (var i = 0; i < cart.length; i++) {
+		if (item === cart[i].itemName) {
+			cart.splice(i, 1)
+			return cart;
+		}
+	}
+	return "That item is not in your cart."
 }
+//////////////////////////////////////////////////////////////////////////
+
 
 function placeOrder(cardNumber) {
 	if (arguments[0] == undefined) {
@@ -40,11 +68,6 @@ function placeOrder(cardNumber) {
 		setCart([])
 		return `Your total cost is $${sumToCharge}, which will be charged to the card ${cardNumber}.`
 	}
-}
-
-// helper functions
-function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function viewCart() {
@@ -67,13 +90,6 @@ function viewCart() {
 	return `${cartDescription}.`
 }
 
-function searchCartForItemToRemove(itemName) {
-	var searchResult
-	for (var i = 0; i < cart.length; i++) {
-		if (cart[i].itemName === itemName) { searchResult = cart[i] }
-	}
-	return searchResult
-}
 
 function sumUpPrices() {
 	var sum = 0
@@ -81,13 +97,4 @@ function sumUpPrices() {
 		sum = sum + cart[i].itemPrice
 	}
 	return sum
-}
-
-function notifyUserThereIsNoItemToRemove() {
-	return 'That item is not in your cart.'
-}
-
-function removeItemFromCart(itemToRemove) {
-	var indexOfItemToRemove = cart.indexOf(itemToRemove)
-	cart.splice(indexOfItemToRemove, 1)
 }
